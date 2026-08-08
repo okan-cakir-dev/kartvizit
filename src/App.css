@@ -5,13 +5,25 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+/* Kapsayıcıları kesin olarak kilitliyoruz - MOBİL KAYMA ÇÖZÜMÜ */
+html, body, #root {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+}
+
 body {
   background-color: #0f172a; /* Masaüstü için koyu uzay mavisi */
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  overflow-x: hidden;
+  transition: background-color 0.4s ease;
+}
+
+body:not(.dark-mode-active) {
+  background-color: #e2e8f0; 
 }
 
 .app-wrapper {
@@ -57,15 +69,13 @@ body {
   min-height: 85vh;
   padding: 30px 25px;
   overflow-y: auto;
-}
-
-.glass-effect {
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 35px;
   border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
 }
 
 /* Animasyonlar */
@@ -143,14 +153,37 @@ body {
   object-fit: cover;
 }
 
+.name-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
 .name {
   font-size: 26px; font-weight: 800; color: #0f172a;
-  margin-bottom: 6px; letter-spacing: -0.5px;
+  letter-spacing: -0.5px;
+}
+
+.verified-badge {
+  filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));
 }
 
 .title {
   font-size: 15px; color: #4f46e5; font-weight: 700;
   margin-bottom: 12px; letter-spacing: 0.5px;
+}
+
+.location-chip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+  margin-bottom: 12px;
 }
 
 .bio {
@@ -268,17 +301,10 @@ body {
   background: #f1f5f9; color: #0f172a; transform: scale(1.02);
 }
 
-/* Mavi Tik ve İsim */
-.name-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 6px;
-}
-
-.verified-badge {
-  filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));
+.btn-success {
+  background: #10b981 !important;
+  color: white !important;
+  border-color: #10b981 !important;
 }
 
 /* Sertifika Chipleri */
@@ -311,11 +337,159 @@ body {
   box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
 }
 
-/* Kopyalandı Butonu Başarı Durumu */
-.btn-success {
-  background: #10b981 !important;
-  color: white !important;
-  border-color: #10b981 !important;
+/* --- ÖNE ÇIKAN PROJELER VİTRİNİ --- */
+.projects-section {
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden; /* Dışa taşmayı kesin engeller */
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 12px;
+  padding-left: 5px;
+  text-align: left;
+}
+
+/* MOBİL KAYMA ÇÖZÜMÜ İÇİN GÜNCELLENEN KISIM */
+.projects-scroll {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.projects-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.project-card {
+  min-width: 240px;
+  max-width: 280px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  scroll-snap-align: start;
+  text-align: left;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+  border-color: #cbd5e1;
+}
+
+.project-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.project-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bg-laravel { background: #ef4444; }
+.bg-react { background: #0ea5e9; }
+.bg-node { background: #22c55e; }
+
+.project-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.project-desc {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.project-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.project-tags span {
+  font-size: 11px;
+  font-weight: 600;
+  background: #f1f5f9;
+  color: #475569;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+/* --- TEKNOLOJİ YIĞINI (MARQUEE) STİLLERİ --- */
+.tech-stack-container {
+  margin: 25px 0 35px 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.marquee {
+  display: flex;
+  width: 100%;
+}
+
+.marquee-content {
+  display: flex;
+  width: max-content;
+  gap: 12px;
+  padding-left: 12px;
+  animation: scroll 15s linear infinite;
+}
+
+.marquee-content:hover {
+  animation-play-state: paused; 
+}
+
+.tech-chip {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.tech-chip:hover {
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+  border-color: #cbd5e1;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } 
 }
 
 /* --- QR KOD MODAL STİLLERİ --- */
@@ -396,71 +570,7 @@ body {
   padding: 0 10px;
 }
 
-/* --- TEKNOLOJİ YIĞINI (MARQUEE) STİLLERİ --- */
-.tech-stack-container {
-  margin: 25px 0 35px 0;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-  /* Kenarlarda şık bir silikleşme efekti yaratır */
-  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-}
-
-.marquee {
-  display: flex;
-  width: 100%;
-}
-
-.marquee-content {
-  display: flex;
-  width: max-content;
-  gap: 12px;
-  padding-left: 12px;
-  animation: scroll 15s linear infinite;
-}
-
-.marquee-content:hover {
-  /* Üzerine gelince animasyon dursun istersen bunu kullanabilirsin */
-  animation-play-state: paused; 
-}
-
-.tech-chip {
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #334155;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.3s ease;
-}
-
-.tech-chip:hover {
-  background: white;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
-  border-color: #cbd5e1;
-}
-
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  /* İçerik iki katı olduğu için %50'ye kadar kaydığında başa sarar ve kusursuz döngü oluşur */
-  100% { transform: translateX(-50%); } 
-}
-
 /* --- GECE MODU (DARK MODE) STİLLERİ --- */
-body {
-  transition: background-color 0.4s ease;
-}
-
-body:not(.dark-mode-active) {
-  background-color: #e2e8f0; 
-}
 
 /* KARTIN KENDİSİ VE YAZILAR */
 .app-wrapper.dark-theme .card-container {
@@ -471,7 +581,9 @@ body:not(.dark-mode-active) {
 .app-wrapper.dark-theme .name,
 .app-wrapper.dark-theme .qr-title,
 .app-wrapper.dark-theme .iban-header,
-.app-wrapper.dark-theme .social-name {
+.app-wrapper.dark-theme .social-name,
+.app-wrapper.dark-theme .section-title,
+.app-wrapper.dark-theme .project-title {
   color: #f8fafc;
 }
 
@@ -481,8 +593,16 @@ body:not(.dark-mode-active) {
 
 .app-wrapper.dark-theme .bio,
 .app-wrapper.dark-theme .qr-desc,
-.app-wrapper.dark-theme .social-username {
+.app-wrapper.dark-theme .social-username,
+.app-wrapper.dark-theme .location-chip,
+.app-wrapper.dark-theme .project-desc {
   color: #94a3b8;
+}
+
+.lang-btn {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.5px;
 }
 
 /* BUTONLAR VE KUTULAR */
@@ -504,13 +624,15 @@ body:not(.dark-mode-active) {
 
 .app-wrapper.dark-theme .social-card,
 .app-wrapper.dark-theme .iban-card,
-.app-wrapper.dark-theme .qr-modal-content {
+.app-wrapper.dark-theme .qr-modal-content,
+.app-wrapper.dark-theme .project-card {
   background: #1e293b;
   border-color: #334155;
 }
 
 .app-wrapper.dark-theme .social-card:hover,
-.app-wrapper.dark-theme .iban-card:hover {
+.app-wrapper.dark-theme .iban-card:hover,
+.app-wrapper.dark-theme .project-card:hover {
   background: #334155;
   border-color: #475569;
 }
@@ -529,143 +651,6 @@ body:not(.dark-mode-active) {
 
 .app-wrapper.dark-theme .tech-chip:hover {
   background: #334155;
-}
-
-/* --- YENİ EKLENEN STİLLER (DİL BUTONU VE LOKASYON) --- */
-.lang-btn {
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-}
-
-.location-chip {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #64748b;
-  margin-bottom: 12px;
-}
-
-/* Gece Modu Uyumları */
-.app-wrapper.dark-theme .location-chip {
-  color: #94a3b8;
-}
-
-/* --- ÖNE ÇIKAN PROJELER VİTRİNİ --- */
-.projects-section {
-  margin-bottom: 30px;
-}
-
-.section-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 12px;
-  padding-left: 5px;
-  text-align: left;
-}
-
-.projects-scroll {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 10px;
-  -webkit-overflow-scrolling: touch;
-  /* Scrollbar gizleme */
-  scrollbar-width: none;
-}
-.projects-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-.project-card {
-  min-width: 240px;
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 16px;
-  scroll-snap-align: start;
-  text-align: left;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
-  transition: all 0.3s ease;
-}
-
-.project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
-  border-color: #cbd5e1;
-}
-
-.project-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.project-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.bg-laravel { background: #ef4444; }
-.bg-react { background: #0ea5e9; }
-.bg-node { background: #22c55e; }
-
-.project-title {
-  font-weight: 700;
-  font-size: 15px;
-  color: #0f172a;
-}
-
-.project-desc {
-  font-size: 13px;
-  color: #64748b;
-  line-height: 1.5;
-  margin-bottom: 12px;
-}
-
-.project-tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.project-tags span {
-  font-size: 11px;
-  font-weight: 600;
-  background: #f1f5f9;
-  color: #475569;
-  padding: 4px 8px;
-  border-radius: 6px;
-}
-
-/* Gece Modu Uyumları */
-.app-wrapper.dark-theme .section-title,
-.app-wrapper.dark-theme .project-title {
-  color: #f8fafc;
-}
-
-.app-wrapper.dark-theme .project-card {
-  background: #1e293b;
-  border-color: #334155;
-}
-
-.app-wrapper.dark-theme .project-card:hover {
-  background: #334155;
-  border-color: #475569;
-}
-
-.app-wrapper.dark-theme .project-desc {
-  color: #94a3b8;
 }
 
 .app-wrapper.dark-theme .project-tags span {
